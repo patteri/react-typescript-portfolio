@@ -1,0 +1,30 @@
+.app {
+  .app-header {
+    height: 150px;
+    padding: 30px;
+    background-color: $blue;
+    color: $white;
+    text-align: center;
+
+    .app-title {
+      font-size: 1.5em;
+    }
+  }
+
+  .app-container {
+    margin: 30px 0;
+  }
+  
+  .app-footer {
+    height: 150px;
+    padding: 30px;
+    background-color: $blue;
+    color: $white;
+    text-align: center;
+
+    a, a:visited {
+      color: $white;
+    }
+  }
+   
+}
