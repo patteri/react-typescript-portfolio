@@ -7,8 +7,12 @@
     ]
   },
   "rules": {
+    "array-type": [true, "array"],
     "interface-name": false,
     "jsx-self-close": true,
+    "max-line-length": [true, 120],
+    "member-ordering": false,
+    "object-literal-sort-keys": false,
     "ordered-imports": false,
     "trailing-comma": [
       true,
@@ -22,6 +26,7 @@
         "singleline": "never",
         "esSpecCompliant": true
       }
-    ]
+    ],
+    "variable-name": [true, "check-format", "allow-pascal-case"]
   }
 }
