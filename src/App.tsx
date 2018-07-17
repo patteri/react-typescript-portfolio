@@ -48,12 +48,13 @@ class App extends React.Component<{}, AppState> {
     const visibleProjects = projects
       .filter(proj => this.state.selectedTypes.length === 0 || this.state.selectedTypes.includes(proj.type))
       .filter(proj => this.state.selectedTags.length === 0 ||
-        this.state.selectedTags.reduce((result, item) => result && proj.tags.includes(item), true));
+        this.state.selectedTags.reduce((result, item) => result && proj.tags.includes(item), true))
+      .sort((proj1, proj2) => proj2.startYear - proj1.startYear);
 
     return (
       <div className="app">
         <header className="app-header">
-          <h1 className="app-title">Petteri Roponen Portfolio</h1>
+          <h1 className="app-title">Portfolio</h1>
         </header>
         <div className="app-container container-fluid">
           <FilterRow label="Techs">
@@ -86,7 +87,7 @@ class App extends React.Component<{}, AppState> {
           </div>
         </div>
         <footer className="app-footer">
-          <a href="mailto:petteri.roponen@gmail.com">petteri.roponen@gmail.com</a>
+          <a href="mailto:first.last@mail.com">first.last@mail.com</a>
         </footer>
       </div>
     );
