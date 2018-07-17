@@ -5,34 +5,39 @@ export interface Link {
 
 export interface ProjectModel {
   name: string;
-  startTime: Date;
-  endTime: Date;
+  startYear: number;
+  endYear?: number;
   type: string;
   description: string;
   tags: string[];
   links: Link[];
+  logo?: string;
   images: string[];
 }
 
 export const contents: ProjectModel[] = [
   {
     name: 'Test project',
-    startTime: new Date(2015, 0, 15),
-    endTime: new Date(2016, 0, 15),
+    startYear: 2015,
+    endYear: 2016,
     type: 'Work life',
     description: 'Description',
     tags: ['React', 'Node.js'],
-    links: [{ name: 'Visible link text', url: 'url' }],
-    images: ['image_name'],
+    links: [
+      { name: 'Visible link text', url: 'www.url.com' },
+      { name: 'Link 2', url: 'www.url2.com' },
+    ],
+    logo: 'project.png',
+    images: ['project.png', 'screenshot.png'],
   },
   {
     name: 'Test project 2',
-    startTime: new Date(2016, 0, 15),
-    endTime: new Date(2017, 0, 15),
+    startYear: 2017,
     type: 'Free time',
     description: 'Description',
     tags: ['React', 'Java'],
-    links: [{ name: 'Visible link text', url: 'url' }],
-    images: ['image_name'],
+    links: [{ name: 'Visible link text', url: 'www.url.com' }],
+    logo: 'screenshot.png',
+    images: [],
   },
 ];

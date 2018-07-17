@@ -1,0 +1,73 @@
+.project {
+  margin-top: 20px;
+  padding: 15px 18px;
+  border: 1px solid $gray-border;
+  border-radius: 12px;
+  display: flex;
+
+  &:first-child {
+    margin-top: 30px;
+  }
+
+  .left-area {
+    width: 162px;
+
+    img {
+      width: 100%;
+      vertical-align: middle;
+      border: 1px solid $light-gray-border;
+    }
+  }
+
+  .right-area {
+    padding-left: 20px;
+  }
+
+  .header {
+    float: left;
+
+    h1 {
+      font-size: 1.2em;
+    }
+  }
+
+  .header-time {
+    font-style: italic;
+  }
+
+  .header-time, .header-type {
+    float: left;
+    margin-left: 30px;
+  }
+
+  .tags {
+    margin: 12px 0;
+  }
+
+  .links {
+    a {
+      display: block;
+      font-style: italic;
+    }
+  }
+
+  .images {
+    margin-top: 20px;
+
+    img {
+      max-width: 200px;
+      max-height: 60px;
+      border: 1px solid $light-gray-border;
+      cursor: pointer;
+
+      &:not(:first-child) {
+        margin-left: 15px;
+      }
+    }
+  }
+
+  .filter {
+    padding: 0px 7px;
+    font-size: 13px;
+  }
+}

@@ -30,47 +30,4 @@
   .filter-row {
     margin-bottom: 15px;
   }
-
-  .filter {
-    display: inline-block;
-    padding: 1px 10px;
-    color: $text;
-    border: 2px solid $blue;
-    border-radius: 12px;
-    cursor: pointer;
-    user-select: none;
-
-    &:not(:first-child) {
-      margin-left: 10px;
-    }
-
-    &.active {
-      color: $white;
-      background-color: $blue;
-    }
-  }
-
-  .project {
-    margin-top: 20px;
-    padding: 10px 15px;
-    border: 1px solid $gray-border;
-    border-radius: 12px;
-
-    .header {
-      float: left;
-
-      h1 {
-        font-size: 1.2em;
-      }
-    }
-
-    .header-type {
-      float: left;
-      margin-left: 30px;
-    }
-
-    .tags {
-      margin: 12px 0;
-    }
-  }
 }

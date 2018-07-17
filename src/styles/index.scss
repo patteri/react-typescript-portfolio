@@ -4,3 +4,9 @@ body {
   font-family: sans-serif;
   color: $text;
 }
+
+.align-helper {
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}

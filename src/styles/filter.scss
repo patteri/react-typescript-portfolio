@@ -1,0 +1,37 @@
+.filter {
+  display: inline-block;
+  padding: 1px 10px;
+  color: $text;
+  border: 2px solid;
+  border-radius: 12px;
+  user-select: none;
+
+  &.tag {
+    border-color: $blue;
+  }
+
+  &.type {
+    border-color: $green;
+  }
+
+  &:not(:first-child) {
+    margin-left: 10px;
+  }
+
+  &.active.tag {
+    color: $white;
+    background-color: $blue;
+  }
+
+  &.active.type {
+    background-color: $green;
+  }
+
+  &.clickable {
+    cursor: pointer;
+  }
+
+  .name {
+    font-weight: 500;
+  }
+}

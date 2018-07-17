@@ -60,6 +60,7 @@ class App extends React.Component<{}, AppState> {
             {projectTags.map(tag => (
               <Filter
                 key={tag.name}
+                className="tag"
                 name={tag.name}
                 count={tag.count}
                 isActive={selectedTags.includes(tag.name)}
@@ -71,15 +72,18 @@ class App extends React.Component<{}, AppState> {
             {projectTypes.map(type => (
               <Filter
                 key={type}
+                className="type"
                 name={type}
                 isActive={selectedTypes.includes(type)}
                 filterSelected={this.typeFilterSelected}
               />))
             }
           </FilterRow>
-          {visibleProjects.map(project => (
-            <Project key={project.name} project={project} />
-          ))}
+          <div>
+            {visibleProjects.map(project => (
+              <Project key={project.name} project={project} />
+            ))}
+          </div>
         </div>
         <footer className="app-footer">
           <a href="mailto:petteri.roponen@gmail.com">petteri.roponen@gmail.com</a>
