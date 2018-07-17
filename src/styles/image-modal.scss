@@ -1,0 +1,39 @@
+.image-modal {
+  .hider-canvas {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1040;
+    background-color: $black;
+    opacity: 0.5;
+  }
+
+  .close-icon {
+    color: $black;
+    font-size: 26px;
+    font-weight: 700;
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    z-index: 1060;
+    padding: 5px 10px 0 0;
+    cursor: pointer;
+  }
+
+  .image-canvas {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1050;
+    text-align: center;
+
+    img {
+      vertical-align: middle;
+      background-color: #fff;
+    }
+  }
+}

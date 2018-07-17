@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { ProjectModel } from '../contents';
 import Filter from './Filter';
+import ImageModal from './ImageModal';
 
 export interface ProjectProps {
   project: ProjectModel;
@@ -86,7 +87,7 @@ class Project extends React.Component<ProjectProps, ProjectState> {
         </div>
 
         {showImage !== '' &&
-          <div onClick={this.hideImage} /> /* TODO: show image in a modal */
+          <ImageModal imagePath={`/images/${showImage}`} hideImage={this.hideImage} />
         }
       </div>
     );
