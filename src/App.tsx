@@ -80,6 +80,7 @@ class App extends React.Component<{}, AppState> {
               />))
             }
           </FilterRow>
+          <span>Listing {visibleProjects.length} / {projects.length} projects</span>
           <div>
             {visibleProjects.map(project => (
               <Project key={project.name} project={project} />
