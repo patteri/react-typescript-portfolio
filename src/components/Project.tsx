@@ -34,28 +34,34 @@ class Project extends React.Component<ProjectProps, ProjectState> {
 
     return (
       <div className="project">
-        <div className="left-area">
+        <div className="left-area d-none d-sm-block">
           <span className="align-helper" />
-          <img className="rounded" src={`/images/${project.logo || 'project.png'}`} alt="logo" />
+          <img
+            src={`/images/${project.logo || 'project.png'}`}
+            alt="logo"
+            data-img={project.logo || 'project.png'}
+            onClick={this.showImage}
+          />
         </div>
         <div className="right-area">
-          <div className="header">
-            <h1>{project.name}</h1>
+          <div className="header-row">
+            <div className="header">
+              <h1>{project.name}</h1>
+            </div>
+            <div className="header-time">
+              <span>{project.startYear}</span>
+              {project.endYear &&
+                <span> - {project.endYear}</span>
+              }
+            </div>
+            <div className="header-type">
+              <Filter
+                className="type"
+                name={project.type}
+                isActive={true}
+              />
+            </div>
           </div>
-          <div className="header-time">
-            <span>{project.startYear}</span>
-            {project.endYear &&
-              <span> - {project.endYear}</span>
-            }
-          </div>
-          <div className="header-type">
-            <Filter
-              className="type"
-              name={project.type}
-              isActive={true}
-            />
-          </div>
-          <div className="clearfix" />
           <div className="tags">
             {project.tags.map(tag => (
               <Filter

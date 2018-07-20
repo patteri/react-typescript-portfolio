@@ -9,10 +9,10 @@ interface FilterRowProps {
 const FilterRow: React.SFC<FilterRowProps> = ({ label, children }) => {
   return (
     <div className="row filter-row">
-      <div className="col-sm-2 col-md-1">
-        <span>{label}</span>
+      <div className="header-col col-sm-2 col-md-1">
+        <span className="">{label}</span>
       </div>
-      <div className="col">
+      <div className="filters-col col">
         {children}
       </div>
     </div>

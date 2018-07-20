@@ -14,8 +14,8 @@
     border-color: $green;
   }
 
-  &:not(:first-child) {
-    margin-left: 10px;
+  &:not(:last-child) {
+    margin-right: 10px;
   }
 
   &.active.tag {
@@ -31,7 +31,7 @@
     cursor: pointer;
   }
 
-  .name {
-    font-weight: 500;
+  .count {
+    font-size: 14px;
   }
 }

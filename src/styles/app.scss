@@ -12,7 +12,11 @@
   }
 
   .app-container {
-    margin: 30px 0;
+    margin: 30px auto;
+
+    @include media-breakpoint-only(xs) {
+      margin-top: 15px;
+    }
   }
   
   .app-footer {
@@ -29,5 +33,18 @@
 
   .filter-row {
     margin-bottom: 15px;
+
+    .header-col {
+      padding-top: 7px;
+    }
+
+    .filters-col {
+      max-height: 194px;
+      overflow: auto;
+    }
+
+    .filter {
+      margin-top: 5px;
+    }
   }
 }

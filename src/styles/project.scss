@@ -10,34 +10,41 @@
   }
 
   .left-area {
-    width: 162px;
+    flex-basis: 162px;
 
     img {
       width: 100%;
       vertical-align: middle;
       border: 1px solid $light-gray-border;
+      cursor: pointer;
     }
   }
 
   .right-area {
-    padding-left: 20px;
-  }
+    flex: 1;
 
-  .header {
-    float: left;
-
-    h1 {
-      font-size: 1.2em;
+    @include media-breakpoint-up(sm) {
+      padding-left: 20px;
     }
   }
 
-  .header-time {
-    font-style: italic;
-  }
+  .header-row {
+    display: flex;
+    flex-wrap: wrap;
 
-  .header-time, .header-type {
-    float: left;
-    margin-left: 30px;
+    .header {
+      h1 {
+        font-size: 1.2em;
+      }
+    }
+
+    .header-time {
+      font-style: italic;
+    }
+
+    .header, .header-time {
+      margin-right: 30px;
+    }
   }
 
   .tags {
@@ -60,8 +67,8 @@
       border: 1px solid $light-gray-border;
       cursor: pointer;
 
-      &:not(:first-child) {
-        margin-left: 15px;
+      &:not(:last-child) {
+        margin-right: 15px;
       }
     }
   }

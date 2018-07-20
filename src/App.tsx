@@ -56,7 +56,7 @@ class App extends React.Component<{}, AppState> {
         <header className="app-header">
           <h1 className="app-title">Portfolio</h1>
         </header>
-        <div className="app-container container-fluid">
+        <div className="app-container container">
           <FilterRow label="Techs">
             {projectTags.map(tag => (
               <Filter
