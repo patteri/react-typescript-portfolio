@@ -37,7 +37,7 @@ class Project extends React.Component<ProjectProps, ProjectState> {
         <div className="left-area d-none d-sm-block">
           <span className="align-helper" />
           <img
-            src={`/images/${project.logo || 'project.png'}`}
+            src={`./images/${project.logo || 'project.png'}`}
             alt="logo"
             data-img={project.logo || 'project.png'}
             onClick={this.showImage}
@@ -83,7 +83,7 @@ class Project extends React.Component<ProjectProps, ProjectState> {
               <img
                 key={img}
                 className="rounded"
-                src={`/images/${img}`}
+                src={`./images/${img}`}
                 alt="project image"
                 data-img={img}
                 onClick={this.showImage}
@@ -93,7 +93,7 @@ class Project extends React.Component<ProjectProps, ProjectState> {
         </div>
 
         {showImage !== '' &&
-          <ImageModal imagePath={`/images/${showImage}`} hideImage={this.hideImage} />
+          <ImageModal imagePath={`./images/${showImage}`} hideImage={this.hideImage} />
         }
       </div>
     );
