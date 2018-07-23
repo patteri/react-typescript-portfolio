@@ -6,17 +6,51 @@ interface FilterRowProps {
   children: React.ReactElement<FilterProps>[];
 }
 
-const FilterRow: React.SFC<FilterRowProps> = ({ label, children }) => {
-  return (
-    <div className="row filter-row">
-      <div className="header-col col-sm-2 col-md-1">
-        <span className="">{label}</span>
+interface FilterRowState {
+  showAll: boolean;
+}
+
+const MINIMIZED_ITEM_COUNT = 12;
+
+class FilterRow extends React.Component<FilterRowProps, FilterRowState> {
+  constructor(props: FilterRowProps) {
+    super(props);
+
+    this.state = {
+      showAll: false,
+    };
+  }
+
+  private toggleShow = () => {
+    this.setState({ showAll: !this.state.showAll });
+  }
+
+  public render() {
+    const { label, children } = this.props;
+    const { showAll } = this.state;
+
+    const visibleChildren = children.length > MINIMIZED_ITEM_COUNT && !showAll ?
+      children.slice(0, MINIMIZED_ITEM_COUNT) : children;
+
+    return (
+      <div className="row filter-row">
+        <div className="header-col col-md-2 col-lg-1">
+          <span className="">{label}</span>
+        </div>
+        <div className="filters-col col d-md-none">
+          {visibleChildren}
+          {children.length > MINIMIZED_ITEM_COUNT &&
+            <button className="btn btn-link toggle-show" onClick={this.toggleShow}>
+              Show {showAll ? 'less' : 'more'}
+            </button>
+          }
+        </div>
+        <div className="filters-col col d-none d-md-block">
+          {children}
+        </div>
       </div>
-      <div className="filters-col col">
-        {children}
-      </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default FilterRow;

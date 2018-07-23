@@ -39,8 +39,10 @@
     }
 
     .filters-col {
-      max-height: 194px;
-      overflow: auto;
+      .toggle-show {
+        padding: 0;
+        white-space: nowrap;
+      }
     }
 
     .filter {
