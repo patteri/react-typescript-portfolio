@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as queryString from 'query-string';
 import * as _ from 'lodash';
 import { ProjectModel, contents } from './contents';
 import FilterRow from './components/FilterRow';
@@ -7,8 +8,6 @@ import Project from './components/Project';
 
 interface AppState {
   projects: ProjectModel[];
-  selectedTypes: string[];
-  selectedTags: string[];
 }
 
 class App extends React.Component<{}, AppState> {
@@ -17,27 +16,40 @@ class App extends React.Component<{}, AppState> {
 
     this.state = {
       projects: contents,
-      selectedTypes: [],
-      selectedTags: [],
     };
   }
 
+  private getSearchParams = () => queryString.parse(location.search);
+
+  private getActiveFilters = (searchParams: object, paramName: string): string[] => {
+    const param = searchParams[paramName] || '';
+    return param.split(',').filter((item: string) => item);
+  }
+
   private typeFilterSelected = (name: string) => {
-    this.filterSelected('selectedTypes', name);
+    this.filterSelected('categories', name);
   }
 
   private tagFilterSelected = (name: string) => {
-    this.filterSelected('selectedTags', name);
+    this.filterSelected('tags', name);
   }
 
   private filterSelected = (prop: string, name: string) => {
-    const items = this.state[prop];
-    const selected = items.includes(name) ? items.filter((item: string) => item !== name) : [...items, name];
-    this.setState({ [prop]: selected } as any);
+    const searchParams = this.getSearchParams();
+    const items = this.getActiveFilters(searchParams, prop);
+    const selected = items.includes(name) ? items.filter(item => item !== name) : [...items, name];
+    if (selected.length > 0) {
+      searchParams[prop] = selected.join(',');
+    } else {
+      delete searchParams[prop];
+    }
+
+    history.pushState(null, undefined, `?${queryString.stringify(searchParams)}`);
+    this.forceUpdate();
   }
 
   public render() {
-    const { projects, selectedTypes, selectedTags } = this.state;
+    const { projects } = this.state;
 
     const projectTypes = _.uniq(projects.map(proj => proj.type));
     const tags = _.countBy(projects.reduce((result, proj) => _.concat(result, proj.tags), []));
@@ -45,10 +57,14 @@ class App extends React.Component<{}, AppState> {
       _.keys(tags).map(key => ({ name: key, count: tags[key] })),
       'count', 'desc'
     );
+
+    const searchParams = this.getSearchParams();
+    const activeTypes = this.getActiveFilters(searchParams, 'categories');
+    const activeTags = this.getActiveFilters(searchParams, 'tags');
     const visibleProjects = projects
-      .filter(proj => this.state.selectedTypes.length === 0 || this.state.selectedTypes.includes(proj.type))
-      .filter(proj => this.state.selectedTags.length === 0 ||
-        this.state.selectedTags.reduce((result, item) => result && proj.tags.includes(item), true))
+      .filter(proj => activeTypes.length === 0 || activeTypes.includes(proj.type))
+      .filter(proj => activeTags.length === 0 ||
+        activeTags.reduce((result, item) => result && proj.tags.includes(item), true))
       .sort((proj1, proj2) => proj2.startYear - proj1.startYear);
 
     return (
@@ -64,7 +80,7 @@ class App extends React.Component<{}, AppState> {
                 className="tag"
                 name={tag.name}
                 count={tag.count}
-                isActive={selectedTags.includes(tag.name)}
+                isActive={activeTags.includes(tag.name)}
                 filterSelected={this.tagFilterSelected}
               />))
             }
@@ -75,7 +91,7 @@ class App extends React.Component<{}, AppState> {
                 key={type}
                 className="type"
                 name={type}
-                isActive={selectedTypes.includes(type)}
+                isActive={activeTypes.includes(type)}
                 filterSelected={this.typeFilterSelected}
               />))
             }
