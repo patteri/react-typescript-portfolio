@@ -10,6 +10,7 @@ export interface ProjectModel {
   type: string;
   description: string;
   tags: string[];
+  roles: string[];
   links: Link[];
   logo?: string;
   images: string[];
@@ -23,6 +24,7 @@ export const contents: ProjectModel[] = [
     type: 'Work life',
     description: 'Description',
     tags: ['React', 'Node.js'],
+    roles: ['Client', 'Server'],
     links: [
       { name: 'Visible link text', url: 'www.url.com' },
       { name: 'Link 2', url: 'www.url2.com' },
@@ -36,6 +38,7 @@ export const contents: ProjectModel[] = [
     type: 'Free time',
     description: 'Description',
     tags: ['React', 'Java'],
+    roles: ['Client'],
     links: [{ name: 'Visible link text', url: 'www.url.com' }],
     logo: 'screenshot.png',
     images: [],

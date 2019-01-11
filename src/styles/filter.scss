@@ -10,6 +10,10 @@
     border-color: $blue;
   }
 
+  &.role {
+    border-color: $orange;
+  }
+
   &.type {
     border-color: $green;
   }
@@ -21,6 +25,11 @@
   &.active.tag {
     color: $white;
     background-color: $blue;
+  }
+
+  &.active.role {
+    color: $white;
+    background-color: $orange;
   }
 
   &.active.type {

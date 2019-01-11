@@ -65,9 +65,17 @@ class Project extends React.Component<ProjectProps, ProjectState> {
           <div className="tags">
             {project.tags.map(tag => (
               <Filter
-                key={tag}
+                key={`tag-${tag}`}
                 className="tag"
                 name={tag}
+                isActive={true}
+              />
+            ))}
+            {project.roles.map(role => (
+              <Filter
+                key={`role-${role}`}
+                className="role"
+                name={role}
                 isActive={true}
               />
             ))}

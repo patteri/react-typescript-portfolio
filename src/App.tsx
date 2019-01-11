@@ -34,6 +34,10 @@ class App extends React.Component<{}, AppState> {
     this.filterSelected('tags', name);
   }
 
+  private roleFilterSelected = (name: string) => {
+    this.filterSelected('roles', name);
+  }
+
   private filterSelected = (prop: string, name: string) => {
     const searchParams = this.getSearchParams();
     const items = this.getActiveFilters(searchParams, prop);
@@ -57,14 +61,22 @@ class App extends React.Component<{}, AppState> {
       _.keys(tags).map(key => ({ name: key, count: tags[key] })),
       'count', 'desc'
     );
+    const roles = _.countBy(projects.reduce((result, proj) => _.concat(result, proj.roles), []));
+    const projectRoles = _.orderBy(
+      _.keys(roles).map(key => ({ name: key, count: roles[key] })),
+      'count', 'desc'
+    );
 
     const searchParams = this.getSearchParams();
     const activeTypes = this.getActiveFilters(searchParams, 'categories');
     const activeTags = this.getActiveFilters(searchParams, 'tags');
+    const activeRoles = this.getActiveFilters(searchParams, 'roles');
     const visibleProjects = projects
       .filter(proj => activeTypes.length === 0 || activeTypes.includes(proj.type))
       .filter(proj => activeTags.length === 0 ||
         activeTags.reduce((result, item) => result && proj.tags.includes(item), true))
+      .filter(proj => activeRoles.length === 0 ||
+        activeRoles.reduce((result, item) => result && proj.roles.includes(item), true))
       .sort((proj1, proj2) => proj2.startYear - proj1.startYear);
 
     return (
@@ -82,6 +94,18 @@ class App extends React.Component<{}, AppState> {
                 count={tag.count}
                 isActive={activeTags.includes(tag.name)}
                 filterSelected={this.tagFilterSelected}
+              />))
+            }
+          </FilterRow>
+          <FilterRow label="Roles">
+            {projectRoles.map(role => (
+              <Filter
+                key={role.name}
+                className="role"
+                name={role.name}
+                count={role.count}
+                isActive={activeRoles.includes(role.name)}
+                filterSelected={this.roleFilterSelected}
               />))
             }
           </FilterRow>
