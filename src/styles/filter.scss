@@ -1,6 +1,6 @@
 .filter {
   display: inline-block;
-  padding: 1px 10px;
+  padding: 0 10px;
   color: $text;
   border: 2px solid;
   border-radius: 12px;
@@ -8,14 +8,23 @@
 
   &.tag {
     border-color: $blue;
+    &:hover {
+      background-color: $light-blue;
+    }
   }
 
   &.role {
     border-color: $orange;
+    &:hover {
+      background-color: $light-orange;
+    }
   }
 
   &.type {
     border-color: $green;
+    &:hover {
+      background-color: $light-green;
+    }
   }
 
   &:not(:last-child) {
@@ -38,6 +47,10 @@
 
   &.clickable {
     cursor: pointer;
+  }
+
+  .name {
+    font-size: 14px;
   }
 
   .count {

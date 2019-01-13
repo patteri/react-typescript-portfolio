@@ -108,6 +108,9 @@ class App extends React.Component<{}, AppState> {
       'startYear', 'desc'
     );
 
+    const minYear = _.min(visibleProjects.map(item => item.startYear));
+    const maxYear = _.max(visibleProjects.map(item => item.endYear || item.startYear));
+
     return (
       <div className="app">
         <header className="app-header">
@@ -128,8 +131,11 @@ class App extends React.Component<{}, AppState> {
               }
             </FilterRow>
           ))}
-          <span>Listing {visibleProjects.length} / {projects.length} projects</span>
-          <div>
+          <p className="listing">
+            Listing <span className="text-bold">{visibleProjects.length} of {projects.length} </span>
+            projects between years <span className="text-bold">{minYear} - {maxYear}</span>
+          </p>
+          <div className="projects">
             {visibleProjects.map(project => (
               <Project key={project.name} project={project} />
             ))}

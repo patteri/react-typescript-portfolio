@@ -1,17 +1,15 @@
 .project {
-  margin-top: 20px;
-  padding: 15px 18px;
-  border: 1px solid $gray-border;
-  border-radius: 12px;
+  margin-top: 10px;
+  padding: 25px 0 15px 0;
+  border-top: 1px solid $gray-border;
   display: flex;
 
   .left-area {
-    flex-basis: 162px;
+    flex-basis: 240px;
 
     img {
       width: 100%;
       vertical-align: middle;
-      border: 1px solid $light-gray-border;
       cursor: pointer;
     }
   }
@@ -19,8 +17,8 @@
   .right-area {
     flex: 1;
 
-    @include media-breakpoint-up(sm) {
-      padding-left: 20px;
+    @include media-breakpoint-up(md) {
+      padding-left: 30px;
     }
   }
 
@@ -31,6 +29,7 @@
     .header {
       h1 {
         font-size: 1.2em;
+        font-weight: 550;
       }
     }
 
@@ -41,10 +40,14 @@
     .header, .header-time {
       margin-right: 30px;
     }
+
+    .filter {
+      margin-top: 0;
+    }
   }
 
   .tags {
-    margin: 12px 0;
+    margin: 7px 0 12px 0;
   }
 
   .links {
@@ -70,7 +73,12 @@
   }
 
   .filter {
+    margin-top: 5px;
     padding: 0px 7px;
     font-size: 13px;
+
+    .name {
+      font-size: 13px;
+    }
   }
 }

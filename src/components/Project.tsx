@@ -34,7 +34,7 @@ class Project extends React.Component<ProjectProps, ProjectState> {
 
     return (
       <div className="project">
-        <div className="left-area d-none d-sm-block">
+        <div className="left-area d-none d-md-block">
           <span className="align-helper" />
           <img
             src={`./images/${project.logo || 'project.png'}`}
@@ -86,18 +86,20 @@ class Project extends React.Component<ProjectProps, ProjectState> {
               <a key={link.url} href={link.url}>{link.name}</a>
             ))}
           </div>
-          <div className="images">
-            {project.images.map(img => (
-              <img
-                key={img}
-                className="rounded"
-                src={`./images/${img}`}
-                alt="project image"
-                data-img={img}
-                onClick={this.showImage}
-              />
-            ))}
-          </div>
+          {project.images.length > 0 &&
+            <div className="images">
+              {project.images.map(img => (
+                <img
+                  key={img}
+                  className="rounded"
+                  src={`./images/${img}`}
+                  alt="project image"
+                  data-img={img}
+                  onClick={this.showImage}
+                />
+              ))}
+            </div>
+          }
         </div>
 
         {showImage !== '' &&

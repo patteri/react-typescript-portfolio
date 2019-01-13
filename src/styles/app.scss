@@ -1,6 +1,6 @@
 .app {
   .app-header {
-    height: 150px;
+    height: 120px;
     padding: 30px;
     background-color: $blue;
     color: $white;
@@ -12,7 +12,7 @@
   }
 
   .app-container {
-    margin: 30px auto;
+    margin: 20px auto;
 
     @include media-breakpoint-only(xs) {
       margin-top: 15px;
@@ -20,7 +20,7 @@
   }
   
   .app-footer {
-    height: 150px;
+    height: 120px;
     padding: 30px;
     background-color: $blue;
     color: $white;
@@ -32,10 +32,11 @@
   }
 
   .filter-row {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 
     .header-col {
       padding-top: 7px;
+      font-size: 15px;
     }
 
     .filters-col {
@@ -48,5 +49,13 @@
     .filter {
       margin-top: 5px;
     }
+  }
+
+  .listing {
+    margin-top: 15px;
+  }
+
+  .projects {
+    margin-top: 15px;
   }
 }
