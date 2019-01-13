@@ -10,6 +10,38 @@ interface AppState {
   projects: ProjectModel[];
 }
 
+interface FilterValue {
+  values: {
+    name: string;
+    count?: number;
+  }[];
+  activeFilters: string[];
+}
+
+const FILTERS = [
+  {
+    label: 'Techs',
+    className: 'tag',
+    propName: 'tags',
+    urlParam: 'tags',
+    hasCount: true,
+  },
+  {
+    label: 'Roles',
+    className: 'role',
+    propName: 'roles',
+    urlParam: 'roles',
+    hasCount: true,
+  },
+  {
+    label: 'Categories',
+    className: 'type',
+    propName: 'type',
+    urlParam: 'categories',
+    hasCount: false,
+  },
+];
+
 class App extends React.Component<{}, AppState> {
   constructor(props: {}) {
     super(props);
@@ -24,18 +56,6 @@ class App extends React.Component<{}, AppState> {
   private getActiveFilters = (searchParams: object, paramName: string): string[] => {
     const param = searchParams[paramName] || '';
     return param.split(',').filter((item: string) => item);
-  }
-
-  private typeFilterSelected = (name: string) => {
-    this.filterSelected('categories', name);
-  }
-
-  private tagFilterSelected = (name: string) => {
-    this.filterSelected('tags', name);
-  }
-
-  private roleFilterSelected = (name: string) => {
-    this.filterSelected('roles', name);
   }
 
   private filterSelected = (prop: string, name: string) => {
@@ -54,30 +74,39 @@ class App extends React.Component<{}, AppState> {
 
   public render() {
     const { projects } = this.state;
-
-    const projectTypes = _.uniq(projects.map(proj => proj.type));
-    const tags = _.countBy(projects.reduce((result, proj) => _.concat(result, proj.tags), []));
-    const projectTags = _.orderBy(
-      _.keys(tags).map(key => ({ name: key, count: tags[key] })),
-      'count', 'desc'
-    );
-    const roles = _.countBy(projects.reduce((result, proj) => _.concat(result, proj.roles), []));
-    const projectRoles = _.orderBy(
-      _.keys(roles).map(key => ({ name: key, count: roles[key] })),
-      'count', 'desc'
-    );
-
     const searchParams = this.getSearchParams();
-    const activeTypes = this.getActiveFilters(searchParams, 'categories');
-    const activeTags = this.getActiveFilters(searchParams, 'tags');
-    const activeRoles = this.getActiveFilters(searchParams, 'roles');
-    const visibleProjects = projects
-      .filter(proj => activeTypes.length === 0 || activeTypes.includes(proj.type))
-      .filter(proj => activeTags.length === 0 ||
-        activeTags.reduce((result, item) => result && proj.tags.includes(item), true))
-      .filter(proj => activeRoles.length === 0 ||
-        activeRoles.reduce((result, item) => result && proj.roles.includes(item), true))
-      .sort((proj1, proj2) => proj2.startYear - proj1.startYear);
+
+    const filterValues: FilterValue[] = FILTERS.map((filter) => {
+      let values;
+      if (filter.hasCount) {
+        const group = _.countBy(projects.reduce((result, proj) => _.concat(result, proj[filter.propName]), []));
+        values = _.orderBy(
+          _.keys(group).map(key => ({ name: key, count: group[key] })),
+          'count', 'desc'
+        );
+      } else {
+        values = _.uniq(projects.map(proj => proj[filter.propName])).map(item => ({ name: item }));
+      }
+      return {
+        values,
+        activeFilters: this.getActiveFilters(searchParams, filter.urlParam),
+      };
+    });
+
+    const visibleProjects = _.orderBy(
+      FILTERS.reduce(
+        (current, filter, index) => {
+          const activeFilters = filterValues[index].activeFilters;
+          if (filter.hasCount) {
+            return current.filter(proj => activeFilters.length === 0 ||
+              activeFilters.reduce((result, item) => result && proj[filter.propName].includes(item), true));
+          }
+          return current.filter(proj => activeFilters.length === 0 || activeFilters.includes(proj[filter.propName]));
+        },
+        projects
+      ),
+      'startYear', 'desc'
+    );
 
     return (
       <div className="app">
@@ -85,41 +114,20 @@ class App extends React.Component<{}, AppState> {
           <h1 className="app-title">Portfolio</h1>
         </header>
         <div className="app-container container">
-          <FilterRow label="Techs">
-            {projectTags.map(tag => (
-              <Filter
-                key={tag.name}
-                className="tag"
-                name={tag.name}
-                count={tag.count}
-                isActive={activeTags.includes(tag.name)}
-                filterSelected={this.tagFilterSelected}
-              />))
-            }
-          </FilterRow>
-          <FilterRow label="Roles">
-            {projectRoles.map(role => (
-              <Filter
-                key={role.name}
-                className="role"
-                name={role.name}
-                count={role.count}
-                isActive={activeRoles.includes(role.name)}
-                filterSelected={this.roleFilterSelected}
-              />))
-            }
-          </FilterRow>
-          <FilterRow label="Categories">
-            {projectTypes.map(type => (
-              <Filter
-                key={type}
-                className="type"
-                name={type}
-                isActive={activeTypes.includes(type)}
-                filterSelected={this.typeFilterSelected}
-              />))
-            }
-          </FilterRow>
+          {FILTERS.map((filter, index) => (
+            <FilterRow key={filter.label} label={filter.label}>
+              {filterValues[index].values.map(item => (
+                <Filter
+                  key={item.name}
+                  className={filter.className}
+                  name={item.name}
+                  count={filter.hasCount ? item.count : undefined}
+                  isActive={filterValues[index].activeFilters.includes(item.name)}
+                  filterSelected={(name) => { this.filterSelected(filter.urlParam, name); }}
+                />))
+              }
+            </FilterRow>
+          ))}
           <span>Listing {visibleProjects.length} / {projects.length} projects</span>
           <div>
             {visibleProjects.map(project => (
