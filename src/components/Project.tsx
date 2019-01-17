@@ -32,14 +32,16 @@ class Project extends React.Component<ProjectProps, ProjectState> {
     const { project } = this.props;
     const { showImage } = this.state;
 
+    const imageName = project.images.length > 0 ? project.images[0] : 'project.png';
+
     return (
       <div className="project">
         <div className="left-area d-none d-md-block">
           <span className="align-helper" />
           <img
-            src={`./images/${project.logo || 'project.png'}`}
+            src={`./images/${imageName}`}
             alt="logo"
-            data-img={project.logo || 'project.png'}
+            data-img={imageName}
             onClick={this.showImage}
           />
         </div>
