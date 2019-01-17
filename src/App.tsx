@@ -58,6 +58,44 @@ class App extends React.Component<{}, AppState> {
     return param.split(',').filter((item: string) => item);
   }
 
+  private filterValues = (): FilterValue[] => {
+    const { projects } = this.state;
+    const searchParams = this.getSearchParams();
+
+    return FILTERS.map((filter) => {
+      let values;
+      if (filter.hasCount) {
+        const group = _.countBy(projects.reduce((result, proj) => _.concat(result, proj[filter.propName]), []));
+        values = _.orderBy(
+          _.keys(group).map(key => ({ name: key, count: group[key] })),
+          'count', 'desc'
+        );
+      } else {
+        values = _.uniq(projects.map(proj => proj[filter.propName])).map(item => ({ name: item }));
+      }
+      return {
+        values,
+        activeFilters: this.getActiveFilters(searchParams, filter.urlParam),
+      };
+    });
+  }
+
+  private filterProjects = (filterValues: FilterValue[]): ProjectModel[] => {
+    const { projects } = this.state;
+
+    return FILTERS.reduce(
+      (current, filter, index) => {
+        const activeFilters = filterValues[index].activeFilters;
+        if (filter.hasCount) {
+          return current.filter(proj => activeFilters.length === 0 ||
+            activeFilters.reduce((result, item) => result && proj[filter.propName].includes(item), true));
+        }
+        return current.filter(proj => activeFilters.length === 0 || activeFilters.includes(proj[filter.propName]));
+      },
+      projects
+    ).sort((a, b) => Math.max(b.startYear, b.endYear || 0) - Math.max(a.startYear, a.endYear || 0));
+  }
+
   private filterSelected = (prop: string, name: string) => {
     const searchParams = this.getSearchParams();
     const items = this.getActiveFilters(searchParams, prop);
@@ -74,40 +112,9 @@ class App extends React.Component<{}, AppState> {
 
   public render() {
     const { projects } = this.state;
-    const searchParams = this.getSearchParams();
 
-    const filterValues: FilterValue[] = FILTERS.map((filter) => {
-      let values;
-      if (filter.hasCount) {
-        const group = _.countBy(projects.reduce((result, proj) => _.concat(result, proj[filter.propName]), []));
-        values = _.orderBy(
-          _.keys(group).map(key => ({ name: key, count: group[key] })),
-          'count', 'desc'
-        );
-      } else {
-        values = _.uniq(projects.map(proj => proj[filter.propName])).map(item => ({ name: item }));
-      }
-      return {
-        values,
-        activeFilters: this.getActiveFilters(searchParams, filter.urlParam),
-      };
-    });
-
-    const visibleProjects = _.orderBy(
-      FILTERS.reduce(
-        (current, filter, index) => {
-          const activeFilters = filterValues[index].activeFilters;
-          if (filter.hasCount) {
-            return current.filter(proj => activeFilters.length === 0 ||
-              activeFilters.reduce((result, item) => result && proj[filter.propName].includes(item), true));
-          }
-          return current.filter(proj => activeFilters.length === 0 || activeFilters.includes(proj[filter.propName]));
-        },
-        projects
-      ),
-      'startYear', 'desc'
-    );
-
+    const filterValues = this.filterValues();
+    const visibleProjects = this.filterProjects(filterValues);
     const minYear = _.min(visibleProjects.map(item => item.startYear));
     const maxYear = _.max(visibleProjects.map(item => item.endYear || item.startYear));
 
