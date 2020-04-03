@@ -28,7 +28,7 @@ export const contents: ProjectModel[] = [
       { name: 'Visible link text', url: 'www.url.com' },
       { name: 'Link 2', url: 'www.url2.com' },
     ],
-    images: ['project.png', 'screenshot.png'],
+    images: ['screenshot.png', 'screenshot.png', 'screenshot.png'],
   },
   {
     name: 'Test project 2',
@@ -38,6 +38,6 @@ export const contents: ProjectModel[] = [
     tags: ['React', 'Java'],
     roles: ['Client'],
     links: [{ name: 'Visible link text', url: 'www.url.com' }],
-    images: ['screenshot.png'],
+    images: [],
   },
 ];

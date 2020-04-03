@@ -1,84 +1,122 @@
-.project {
-  margin-top: 10px;
-  padding: 25px 0 15px 0;
-  border-top: 1px solid $gray-border;
-  display: flex;
-
-  .left-area {
-    flex-basis: 240px;
-
-    img {
-      width: 100%;
-      vertical-align: middle;
-      cursor: pointer;
-    }
+.project-row {
+  &:nth-child(odd) {
+    background-color: $blue10;
   }
 
-  .right-area {
-    flex: 1;
-
-    @include media-breakpoint-up(md) {
-      padding-left: 30px;
-    }
-  }
-
-  .header-row {
+  .project {
+    padding-top: 40px;
+    padding-bottom: 40px;
     display: flex;
-    flex-wrap: wrap;
 
-    .header {
-      h1 {
-        font-size: 1.2em;
-        font-weight: 550;
+    .left-area {
+      flex-basis: 360px;
+
+      @include media-breakpoint-up(sm) {
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+      }
+      @include media-breakpoint-down(lg) {
+        flex-basis: 280px;
+      }
+
+      img {
+        width: 100%;
+        cursor: pointer;
+
+        &.keep-original-size {
+          width: auto;
+          height: fit-content;
+        }
       }
     }
 
-    .header-time {
-      font-style: italic;
+    .right-area {
+      flex: 1;
+
+      @include media-breakpoint-up(sm) {
+        padding-left: 20px;
+      }
+      @include media-breakpoint-up(md) {
+        padding-left: 50px;
+      }
+
+      p {
+        margin-bottom: 0;
+      }
     }
 
-    .header, .header-time {
-      margin-right: 30px;
+    .header-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+
+      .header {
+        h1 {
+          margin-bottom: 3px;
+          font-size: 1.2em;
+          font-weight: 550;
+        }
+      }
+
+      .header-time {
+        font-style: italic;
+      }
+
+      .header, .header-time {
+        margin-right: 30px;
+      }
+
+      .filter {
+        margin-top: 0;
+      }
+    }
+
+    .tags {
+      margin: 7px 0 17px 0;
+    }
+
+    .links {
+      margin-top: 15px;
+
+      a {
+        display: block;
+        font-style: italic;
+        text-decoration: none;
+      }
+    }
+
+    .mobile-logo {
+      margin-top: 20px;
+      
+      img {
+        max-width: 100%;
+      }
+    }
+
+    .images {
+      margin-top: 20px;
+
+      img {
+        max-width: 200px;
+        max-height: 60px;
+        border: 1px solid $light-gray-border;
+        cursor: pointer;
+
+        &:not(:last-child) {
+          margin-right: 15px;
+        }
+      }
     }
 
     .filter {
-      margin-top: 0;
-    }
-  }
-
-  .tags {
-    margin: 7px 0 12px 0;
-  }
-
-  .links {
-    a {
-      display: block;
-      font-style: italic;
-    }
-  }
-
-  .images {
-    margin-top: 20px;
-
-    img {
-      max-width: 200px;
-      max-height: 60px;
-      border: 1px solid $light-gray-border;
-      cursor: pointer;
-
-      &:not(:last-child) {
-        margin-right: 15px;
-      }
-    }
-  }
-
-  .filter {
-    margin-top: 5px;
-    padding: 0px 7px;
-    font-size: 13px;
-
-    .name {
+      margin-top: 5px;
+      padding: 2px 10px;
       font-size: 13px;
+
+      .name {
+        font-size: 13px;
+      }
     }
   }
 }

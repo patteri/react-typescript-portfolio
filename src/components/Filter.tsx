@@ -22,9 +22,12 @@ const Filter: React.SFC<FilterProps> = ({ className, name, count, isActive, filt
       onClick={onFilterSelected}
     >
       <span className="name">{name}</span>
-      {count &&
-        <span className="count"> - {count}</span>
-      }
+      {count && (
+        <>
+          <span className="separator">-</span>
+          <span className="count">{count}</span>
+        </>
+      )}
     </div>
   );
 };

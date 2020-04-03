@@ -105,8 +105,10 @@ class App extends React.Component<{}, AppState> {
     } else {
       delete searchParams[prop];
     }
+    const searchString = queryString.stringify(searchParams);
 
-    history.pushState(null, undefined, `?${queryString.stringify(searchParams)}`);
+    const { origin, pathname } = window.location;
+    history.pushState(null, '', searchString !== '' ? `?${searchString}` : `${origin}${pathname}`);
     this.forceUpdate();
   }
 
@@ -119,11 +121,13 @@ class App extends React.Component<{}, AppState> {
     const maxYear = _.max(visibleProjects.map(item => item.endYear || item.startYear));
 
     return (
-      <div className="app">
-        <header className="app-header">
+      <div className="app container-fluid">
+        <header className="row app-header">
+          <div className="col">
           <h1 className="app-title">Portfolio</h1>
+          </div>
         </header>
-        <div className="app-container container">
+        <div className="app-container">
           {FILTERS.map((filter, index) => (
             <FilterRow key={filter.label} label={filter.label}>
               {filterValues[index].values.map(item => (
@@ -138,19 +142,25 @@ class App extends React.Component<{}, AppState> {
               }
             </FilterRow>
           ))}
-          <p className="listing">
-            Listing <span className="text-bold">{visibleProjects.length} of {projects.length} </span>
-            projects between years <span className="text-bold">{minYear} - {maxYear}</span>
-          </p>
+          <div className="row justify-content-center">
+            <div className="col col-lg-10 col-xl-8">
+              <p className="listing">
+                Listing <span className="text-bold">{visibleProjects.length} of {projects.length} </span>
+                projects between years <span className="text-bold">{minYear} - {maxYear}</span>
+              </p>
+            </div>
+          </div>
           <div className="projects">
             {visibleProjects.map(project => (
               <Project key={project.name} project={project} />
             ))}
           </div>
         </div>
-        <footer className="app-footer">
+        <div className="row justify-content-center">
+          <footer className="app-footer col">
           <a href="mailto:first.last@mail.com">first.last@mail.com</a>
-        </footer>
+          </footer>
+        </div>
       </div>
     );
   }

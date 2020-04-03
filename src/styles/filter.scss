@@ -5,6 +5,7 @@
   border: 2px solid;
   border-radius: 12px;
   user-select: none;
+  transition: all 0.3s;
 
   &.tag {
     border-color: $blue;
@@ -21,9 +22,9 @@
   }
 
   &.type {
-    border-color: $green;
+    border-color: $purple;
     &:hover {
-      background-color: $light-green;
+      background-color: $light-purple;
     }
   }
 
@@ -42,7 +43,8 @@
   }
 
   &.active.type {
-    background-color: $green;
+    color: $white;
+    background-color: $purple;
   }
 
   &.clickable {
@@ -51,6 +53,11 @@
 
   .name {
     font-size: 14px;
+  }
+
+  .separator {
+    padding: 0 5px;
+    color: $gray-border;
   }
 
   .count {

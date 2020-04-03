@@ -33,8 +33,8 @@ class FilterRow extends React.Component<FilterRowProps, FilterRowState> {
       children.slice(0, MINIMIZED_ITEM_COUNT) : children;
 
     return (
-      <div className="row filter-row">
-        <div className="header-col col-md-2 col-lg-1">
+      <div className="row justify-content-center filter-row">
+        <div className="header-col col-lg-2 col-xl-1">
           <span className="">{label}</span>
         </div>
         <div className="filters-col col d-md-none">
@@ -45,7 +45,7 @@ class FilterRow extends React.Component<FilterRowProps, FilterRowState> {
             </button>
           }
         </div>
-        <div className="filters-col col d-none d-md-block">
+        <div className="filters-col col d-none d-md-block col-lg-8 col-xl-7">
           {children}
         </div>
       </div>
