@@ -61,8 +61,16 @@
     }
   }
 
-  .listing {
+  .timeline {
     margin-top: 30px;
+
+    .show-all {
+      margin-bottom: 10px;
+    }
+  }
+
+  .listing {
+    margin-top: 0px;
   }
 
   .projects {

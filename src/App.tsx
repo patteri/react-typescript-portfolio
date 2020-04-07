@@ -5,6 +5,7 @@ import { ProjectModel, contents } from './contents';
 import FilterRow from './components/FilterRow';
 import Filter from './components/Filter';
 import Project from './components/Project';
+import Timeline from './components/Timeline';
 
 interface AppState {
   projects: ProjectModel[];
@@ -88,7 +89,7 @@ class App extends React.Component<{}, AppState> {
         const activeFilters = filterValues[index].activeFilters;
         if (filter.hasCount) {
           return current.filter(proj => activeFilters.length === 0 ||
-            activeFilters.reduce((result, item) => result && proj[filter.propName].includes(item), true));
+            activeFilters.reduce((result, item) => result || proj[filter.propName].includes(item), false));
         }
         return current.filter(proj => activeFilters.length === 0 || activeFilters.includes(proj[filter.propName]));
       },
@@ -116,15 +117,17 @@ class App extends React.Component<{}, AppState> {
     const { projects } = this.state;
 
     const filterValues = this.filterValues();
+    const tags = filterValues[0];
     const visibleProjects = this.filterProjects(filterValues);
     const minYear = _.min(visibleProjects.map(item => item.startYear));
     const maxYear = _.max(visibleProjects.map(item => item.endYear || item.startYear));
+    const isFiltering = visibleProjects.length === projects.length;
 
     return (
       <div className="app container-fluid">
         <header className="row app-header">
           <div className="col">
-          <h1 className="app-title">Portfolio</h1>
+            <h1 className="app-title">Portfolio</h1>
           </div>
         </header>
         <div className="app-container">
@@ -142,6 +145,14 @@ class App extends React.Component<{}, AppState> {
               }
             </FilterRow>
           ))}
+          <Timeline
+            heading={
+              `${isFiltering ? 'Top techs' : 'Techs of the filtered projects'} in timeline:`
+            }
+            projects={visibleProjects}
+            tags={tags.activeFilters.length > 0 ? tags.activeFilters : tags.values.map(item => item.name)}
+            limit={isFiltering ? 10 : undefined}
+          />
           <div className="row justify-content-center">
             <div className="col col-lg-10 col-xl-8">
               <p className="listing">
@@ -158,7 +169,7 @@ class App extends React.Component<{}, AppState> {
         </div>
         <div className="row justify-content-center">
           <footer className="app-footer col">
-          <a href="mailto:first.last@mail.com">first.last@mail.com</a>
+            <a href="mailto:first.last@mail.com">first.last@mail.com</a>
           </footer>
         </div>
       </div>

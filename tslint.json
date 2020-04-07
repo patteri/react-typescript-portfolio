@@ -1,5 +1,10 @@
 {
-  "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier", "tslint-config-airbnb"],
+  "extends": [
+    "tslint:recommended",
+    "tslint-react",
+    "tslint-config-prettier",
+    "tslint-config-airbnb"
+  ],
   "linterOptions": {
     "exclude": [
       "config/**/*.js",
@@ -7,12 +12,19 @@
     ]
   },
   "rules": {
-    "array-type": [true, "array"],
+    "array-type": [
+      true,
+      "array"
+    ],
     "interface-name": false,
     "jsx-no-lambda": false,
     "jsx-self-close": true,
-    "max-line-length": [true, 120],
+    "max-line-length": [
+      true,
+      120
+    ],
     "member-ordering": false,
+    "no-console": false,
     "no-trailing-whitespace": true,
     "object-literal-sort-keys": false,
     "object-shorthand-properties-first": false,
@@ -30,6 +42,10 @@
         "esSpecCompliant": true
       }
     ],
-    "variable-name": [true, "check-format", "allow-pascal-case"]
+    "variable-name": [
+      true,
+      "check-format",
+      "allow-pascal-case"
+    ]
   }
 }
