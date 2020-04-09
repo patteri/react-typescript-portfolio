@@ -41,7 +41,6 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
   public render() {
     const { heading, projects, tags, limit } = this.props;
     const { showAll } = this.state;
-    const height = `${41 * (!showAll && limit && tags.length > limit ? limit : tags.length) + 60}px`;
 
     const tagMap = tags.reduce((prev, cur) => ({ ...prev, [cur]: [] }), {});
     projects.forEach((project) => {
@@ -66,6 +65,9 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
         ],
       []
     );
+
+    const visibleTags = Object.keys(tagMap).reduce((prev, cur) => prev + (tagMap[cur].length > 0 ? 1 : 0), 0);
+    const height = `${41 * (!showAll && limit && tags.length > limit ? limit : visibleTags) + 60}px`;
 
     return (
       <div className="timeline row justify-content-center" >
